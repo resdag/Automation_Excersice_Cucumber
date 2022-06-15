@@ -1,8 +1,9 @@
-Feature: US1001 Automation Excersice
+@autoex
+Feature: US001 Automation Exercise sayfasindaki testler yapilmalidir
 
-  @aetc2
+  @aetc02
   Scenario: TC02 Login User with correct email and password
-    Given Launch browser and Navigate to url "automationExcerciseUrl"
+    Given Launch browser and Navigate to url "autoExUrl"
     And Verify that home page is visible successfully
     And Click on Signup Login button
     And Verify Login to your account is visible
