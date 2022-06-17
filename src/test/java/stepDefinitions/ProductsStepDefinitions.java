@@ -4,13 +4,18 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import org.junit.Assert;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.ProductsPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 
+import java.time.Duration;
+
 public class ProductsStepDefinitions {
     ProductsPage productsPage = new ProductsPage();
     Actions actions = new Actions(Driver.getDriver());
+    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(15));
 
     @Given("Click on Products button")
     public void click_on_products_button() {
@@ -60,14 +65,26 @@ public class ProductsStepDefinitions {
         org.junit.Assert.assertTrue(productsPage.searchedProduct.isDisplayed());
     }
 
+    @And("Hover over first product and click Add to cart")
+    public void hoverOverFirstProductAndClickAddToCart() throws InterruptedException {
+        actions.moveToElement(productsPage.allProductsFirstElement).perform();
+        wait.until(ExpectedConditions.visibilityOf(productsPage.firstProductAddToCart)).click();
+    }
+
+    @And("Click Continue Shopping button")
+    public void clickContinueShoppingButton() {
+        productsPage.continueShoppingButton.click();
+    }
+
     @Given("Hover over second product and click Add to cart")
     public void hover_over_second_product_and_click_add_to_cart() {
-        productsPage.allProductsSecondElement.click();
+        actions.moveToElement(productsPage.allProductsSecondElement).perform();
+        wait.until(ExpectedConditions.visibilityOf(productsPage.secondProductAddToCart)).click();
     }
 
     @Given("Click View Cart button")
     public void click_view_cart_button() {
-        productsPage.viewCartButton.click();
+        wait.until(ExpectedConditions.visibilityOf(productsPage.viewCartButton)).click();
     }
 
     @Given("Verify both products are added to Cart")
@@ -77,32 +94,22 @@ public class ProductsStepDefinitions {
 
     @Given("Verify their prices, quantity and total price")
     public void verify_their_prices_quantity_and_total_price() {
-        // autoExPage.productsButton.click();
-        // String expectedCartFirstElementText = autoExPage.firstProductElement.getText();
-        // String expectedCartSecondElementText = autoExPage.secondProductElement.getText();
-        // String actualCartFirstElementName = autoExPage.cartFirstElementName.getText();
-        // String actualCartSecondElementName = autoExPage.cartSecondElementName.getText();
-        // Driver.getDriver().navigate().back();
-        // Assert.assertTrue(expectedCartFirstElementText.contains(actualCartFirstElementName) &&
-        //         expectedCartSecondElementText.contains(actualCartSecondElementName) &&
-        //         expectedCartFirstElementText.contains(autoExPage.cartTotalPriceElements.get(0).getText())&&
-        //         expectedCartSecondElementText.contains(autoExPage.cartTotalPriceElements.get(1).getText()));
+        int firstProductPrice = Integer.parseInt(productsPage.cartFirstPrice.getText().replaceAll("[^0-9]", ""));
+        int secondProductPrice = Integer.parseInt(productsPage.cartSecondPrice.getText().replaceAll("[^0-9]", ""));
+
+        String firstTotalPrice = productsPage.cartFirstTotolPrice.getText().replaceAll("[^0-9]", "");
+        String secondTotalPrice = productsPage.cartSecondTotolPrice.getText().replaceAll("[^0-9]", "");
+
+        Assert.assertEquals(500, firstProductPrice);
+        Assert.assertEquals(400, secondProductPrice);
+        Assert.assertEquals("1", productsPage.cartFirstQuantity.getText());
+        Assert.assertEquals("1", productsPage.cartSecondQuantity.getText());
+        Assert.assertEquals("500", firstTotalPrice);
+        Assert.assertEquals("400", secondTotalPrice);
     }
 
     @And("Verify user is navigated to ALL PRODUCTS page successfully")
     public void verifyUserIsNavigatedToALLPRODUCTSPageSuccessfully() {
         Assert.assertTrue(productsPage.allProductsTextElement.isDisplayed());
-
-    }
-
-    @And("Hover over first product and click Add to cart")
-    public void hoverOverFirstProductAndClickAddToCart() throws InterruptedException {
-        actions.moveToElement(productsPage.allProductsFirstElement)
-                .click(productsPage.firstProductAddToCart).perform();
-    }
-
-    @And("Click Continue Shopping button")
-    public void clickContinueShoppingButton() {
-        productsPage.continueShoppingButton.click();
     }
 }

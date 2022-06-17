@@ -48,10 +48,32 @@ public class ProductsPage {
     @FindBy(xpath = "(//a[text()='Add to cart'])[3]")
     public WebElement allProductsSecondElement;
 
-    @FindBy(xpath = "(//a[.='Add to cart'])[1]")
+    @FindBy(xpath = "(//a[@class='btn btn-default add-to-cart'])[2]")
     public WebElement firstProductAddToCart;
 
-    @FindBy(xpath = "//button[.='Continue Shopping']")
+    @FindBy(xpath = "(//a[@class='btn btn-default add-to-cart'])[4]")
+    public WebElement secondProductAddToCart;
+
+    @FindBy(xpath = "//button[text()='Continue Shopping']")
     public WebElement continueShoppingButton;
+
+    @FindBy(xpath = "(//td[@class='cart_price'])[1]")
+    public WebElement cartFirstPrice;
+
+    @FindBy(xpath = "(//td[@class='cart_price'])[2]")
+    public WebElement cartSecondPrice;
+
+    @FindBy(xpath = "(//p[@class='cart_total_price'])[1]")
+    public WebElement cartFirstTotolPrice;
+
+    @FindBy(xpath = "(//p[@class='cart_total_price'])[2]")
+    public WebElement cartSecondTotolPrice;
+
+    @FindBy(xpath = "(//td[@class='cart_quantity'])[1]")
+    public WebElement cartFirstQuantity;
+
+    @FindBy(xpath = "(//td[@class='cart_quantity'])[2]")
+    public WebElement cartSecondQuantity;
+
 
 }
