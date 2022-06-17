@@ -112,4 +112,37 @@ public class ProductsStepDefinitions {
     public void verifyUserIsNavigatedToALLPRODUCTSPageSuccessfully() {
         Assert.assertTrue(productsPage.allProductsTextElement.isDisplayed());
     }
+
+    @Given("Click View Product for any product on home page")
+    public void click_view_product_for_any_product_on_home_page() {
+        productsPage.productsButton.click();
+        productsPage.firstViewProduct.click();
+
+    }
+
+    @Given("Verify product detail is opened")
+    public void verify_product_detail_is_opened() {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("product_detail"));
+    }
+
+    @Given("Increase quantity to {int}")
+    public void increase_quantity_to(Integer quantity) {
+        String strQuantity = quantity+"";
+        productsPage.productDetailsCartQuantity.clear();
+        productsPage.productDetailsCartQuantity.sendKeys(strQuantity);
+    }
+
+    @Given("Click Add to cart button")
+    public void click_add_to_cart_button() {
+        productsPage.productDetailsAddCart.click();
+
+    }
+
+    @Given("Verify that product is displayed in cart page with exact quantity")
+    public void verify_that_product_is_displayed_in_cart_page_with_exact_quantity() {
+        String expectedQuantity = "4";
+        String actualQuantity = productsPage.cartFirstQuantity.getText();
+        Assert.assertEquals(expectedQuantity, actualQuantity);
+    }
+
 }

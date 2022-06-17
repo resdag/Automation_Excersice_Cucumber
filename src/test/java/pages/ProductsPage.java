@@ -75,5 +75,9 @@ public class ProductsPage {
     @FindBy(xpath = "(//td[@class='cart_quantity'])[2]")
     public WebElement cartSecondQuantity;
 
+    @FindBy(xpath = "//input[@id='quantity']")
+    public WebElement productDetailsCartQuantity;
 
+    @FindBy(xpath = "//button[@type='button']")
+    public WebElement productDetailsAddCart;
 }
